@@ -9,7 +9,7 @@ addpath('../common/')
 
 Flag_Dim = 1;
 % Construct the dimensioned parameters
-PD = Fun_PD_my_test_KF;
+PD = Fun_PD_Gro_Elev_Pitch_KF;
 % Modify the dimensioned parameters
 PD.Env.Vw      = 15;               % Wind Velocity                     (m/s)
 PD.Bridle.delta = 80*pi/180;       % delta                             (rad)
