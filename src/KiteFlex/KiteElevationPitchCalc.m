@@ -56,39 +56,16 @@ PND.Control.Type      = 5;  % Closed loop control
 % Add the deflection of the control surface to the state vector
 u0                    = [u0;PND.Bridle.lb;PND.Bridle.delta+10/180*pi;PND.Bridle.eta];  %[u0; Bridle Length; Bridle Angle Delta; Bridle Angle Eta]
 
-[k_elev,k_pitch]     = calc_elev_pitch(30/180*pi,u0,PD,PND,Flag_Dim);
-fprintf("Bridle Delta: %f deg\tElevation: %.3f deg, Pitch: %.3f deg\n",30,k_elev,k_pitch);
-% KiteElevation = zeros(size(8:-5:20));
-% KitePitch     = zeros(size(8:-5:20));
-% index = 1;
-% for i=80:-5:20
-%     [k_elev,k_pitch]     = calc_elev_pitch(i/180*pi,u0,PD,PND,Flag_Dim);
-%     KiteElevation(index) = k_elev;
-%     KitePitch(index)     = k_pitch;
-%     fprintf("Bridle Delta: %f deg\tElevation: %.3f deg, Pitch: %.3f deg\n",i,k_elev,k_pitch);
-%     index = index + 1;
-% end
-
-
-%           [Kite Position, Velocity, Euler, alfa&beta, Tension, Control, Rotor angular velocity, Error_C]
-% Flag_Plot = [1            ,     1   ,   1  ,     1    ,    1   ,    1   ,       0               ,   1    ];
-
-% Plot_Results_KF(Tout,rR_Edge, rR, vR, aR, omegaR, gR, FA_R, Tension, rQ, R_KE, ...
-%     rK, vK, aK, euler, omegaK, gK, FA_K, FR_K, FG_K,  MA_K, MR_K, MG_K, MMC_K, alfa_K, beta_K,... 
-%     rG, vG, aG, omegaG, gG, FA_G,  FK_G, MA_G, MK_G,  MMC_G, xc_out,xs_target_out,Error_C, Flag_Dim, Flag_Plot,PD)
-
-
-
-% Unit_Time         = '(s)$';
-% Unit_deg          = '(^\circ)$';
-% plot(T,euler(2,:),'linewidth',1)
-% if PD.Control.Type==5 % Close-Loop
-%    plot(T,xs_target_out(2*NR+1,:),'r--','linewidth',LWidth)
-% end
-% xlabel(['$Time\ ' Unit_Time],'fontsize',12,'interpreter','latex' )
-% ylabel(['$\theta\ ' Unit_deg],'fontsize',12,'interpreter','latex')
-% grid on
-% set(gca,'box','on','fontsize',12)
+KiteElevation = zeros(size(8:-5:20));
+KitePitch     = zeros(size(8:-5:20));
+index = 1;
+for i=80:-5:20
+    [k_elev,k_pitch]     = calc_elev_pitch(i/180*pi,u0,PD,PND,Flag_Dim);
+    KiteElevation(index) = k_elev;
+    KitePitch(index)     = k_pitch;
+    fprintf("Bridle Delta: %f deg\tElevation: %.3f deg, Pitch: %.3f deg\n",i,k_elev,k_pitch);
+    index = index + 1;
+end
 
 function [k_elev,k_pitch] = calc_elev_pitch(bridle_delta,u0,PD,PND,Flag_Dim)
     u0(end-2:end) = [PND.Bridle.lb,bridle_delta,PND.Bridle.eta];
